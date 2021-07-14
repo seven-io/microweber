@@ -17,6 +17,36 @@ if (isset($_POST['sms77_bulk_sms'])) $responses[] =
 <form method='post'>
     <input type='hidden' value='1' name='sms77_bulk_sms'/>
 
+    <fieldset>
+        <legend><?php _e('Search Filters') ?></legend>
+
+        <label>
+            <input checked name='filter_is_active' type='checkbox' value='1'/>
+            <?php _e('Is Active') ?>
+            <span data-toggle="tooltip"
+                  title="<?php _e('Retrieve only active users?') ?>">
+            <i class="mdi mdi-help-circle"></i></span>
+        </label>
+
+        <label>
+            <input name='filter_is_admin' type='checkbox' value='1'/>
+            <?php _e('Is Admin') ?>
+            <span data-toggle="tooltip"
+                  title="<?php _e('Retrieve only admin users?') ?>">
+            <i class="mdi mdi-help-circle"></i></span>
+        </label>
+
+        <label>
+            <input checked name='filter_is_verified' type='checkbox' value='1'/>
+            <?php _e('Is Verified') ?>
+            <span data-toggle="tooltip"
+                  title="<?php _e('Retrieve only verified users?') ?>">
+            <i class="mdi mdi-help-circle"></i></span>
+        </label>
+    </fieldset>
+
+    <hr>
+
     <label>
         <input name='flash' type='checkbox' value='1'>
         <?php _e('Flash') ?>

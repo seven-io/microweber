@@ -37,7 +37,17 @@ function sms77_get_phones(array $users) {
  * @return array
  */
 function sms77_get_users() {
-    $users = get_users('');
+    $filters = [];
+
+    if (isset($_POST['filter_is_active']))
+        $filters[] = 'is_active=' . $_POST['filter_is_active'];
+    if (isset($_POST['filter_is_admin']))
+        $filters[] = 'is_admin=' . $_POST['filter_is_admin'];
+    if (isset($_POST['filter_is_verified']))
+        $filters[] = 'is_verified=' . $_POST['filter_is_verified'];
+
+    $users = get_users(implode('&', $filters));
+    if (!is_array($users)) $users = [];
 
     foreach ($users as $i => $user)
         if (null === $user['phone'] || '' === $user['phone']) unset($users[$i]);
@@ -52,7 +62,7 @@ function sms77_get_users() {
  */
 function sms77_post($endpoint, array $data) {
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://gateway.sms77.io/api/" . $endpoint);
+    curl_setopt($ch, CURLOPT_URL, 'https://gateway.sms77.io/api/' . $endpoint);
 
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
@@ -75,17 +85,12 @@ function sms77_post($endpoint, array $data) {
  * @return bool|string
  */
 function sms77_sms($to) {
-    return sms77_post('sms', [
-        'debug' => $_POST['debug'],
-        'delay' => $_POST['delay'],
-        'flash' => $_POST['flash'],
-        'foreign_id' => $_POST['foreign_id'],
-        'from' => $_POST['from'],
-        'label' => $_POST['label'],
-        'no_reload' => $_POST['no_reload'],
-        'performance_tracking' => $_POST['performance_tracking'],
-        'text' => $_POST['text'],
-        'to' => $to,
-    ]);
+    $params = ['text' => $_POST['text'], 'to' => $to,];
+
+    foreach (['debug', 'delay', 'flash', 'foreign_id', 'from', 'label', 'no_reload',
+                 'performance_tracking'] as $param)
+        if (isset($_POST[$param])) $params[$param] = $_POST[$param];
+
+    return sms77_post('sms', $params);
 }
 

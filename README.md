@@ -3,7 +3,7 @@
 
 ## Installation
 
-1. `unzip -d /path/to/microweber/userfiles/modules/admin`
+1. `unzip -d /path/to/microweber/userfiles/modules/admin <archive_name>.zip`
 2. Admin: Go to `Modules`, filter `Admin modules` & `Uninstalled` and select `Sms77` for installation
 3. After page reload click the module and enter your API key - see [screenshot](_screenshots/settings.png)
 
