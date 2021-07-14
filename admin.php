@@ -1,12 +1,10 @@
 <?php only_admin_access();
-
 $module = module_info($params['module']);
 $liveEdit = false;
 if (isset($params['live_edit']) && $params['live_edit']) $liveEdit = $params['live_edit'];
 ?>
 
-<?php if (isset($params['backend'])): ?>
-    <module type='admin/modules/info'/><?php endif; ?>
+<?php if (isset($params['backend'])): ?><module type='admin/modules/info'/><?php endif; ?>
 
 <div class='card style-1 mb-3 <?php if ($liveEdit): ?>card-in-live-edit<?php endif; ?>'>
     <div class='card-header'>
@@ -27,9 +25,6 @@ if (isset($params['live_edit']) && $params['live_edit']) $liveEdit = $params['li
 
                 <div class='mw-accordion-content mw-ui-box mw-ui-box-content'>
                     <?php require __DIR__ . DS . 'settings.php'; ?>
-<!--                    <module type='sms77/settings'
-                            moduleClass='<?/*= $config['module_class'] */?>'
-                            optionGroup='<?/*= $module['module'] */?>'/>-->
                 </div>
             </div>
 
@@ -41,7 +36,6 @@ if (isset($params['live_edit']) && $params['live_edit']) $liveEdit = $params['li
                 </div>
                 <div class='mw-accordion-content mw-ui-box mw-ui-box-content'>
                     <?php require __DIR__ . DS . 'bulk_sms.php'; ?>
-<!--                    <module type='sms77/bulk_sms'/>-->
                 </div>
             </div>
         </div>
