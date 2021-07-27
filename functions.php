@@ -81,16 +81,48 @@ function sms77_post($endpoint, array $data) {
 }
 
 /**
- * @param string $to
- * @return bool|string
+ * @return array
  */
-function sms77_sms($to) {
-    $params = ['text' => $_POST['text'], 'to' => $to,];
+function sms77_build_base_params() {
+    $params = [];
 
     foreach (['debug', 'delay', 'flash', 'foreign_id', 'from', 'label', 'no_reload',
                  'performance_tracking'] as $param)
         if (isset($_POST[$param])) $params[$param] = $_POST[$param];
 
-    return sms77_post('sms', $params);
+    return $params;
+}
+
+/**
+ * @return string[]
+ */
+function sms77_sms() {
+    $responses = [];
+    $users = sms77_get_users();
+    $text = $_POST['text'];
+    $requests = [];
+    $matches = [];
+    preg_match_all('{{{+[a-z]*_*[a-z]+}}}', $text, $matches);
+    $hasPlaceholders = is_array($matches) && !empty($matches[0]);
+
+    if ($hasPlaceholders) foreach ($users as $user) {
+        $personalText = $text;
+
+        foreach ($matches[0] as $match) {
+            $key = trim($match, '{}');
+            $replace = isset($user[$key]) ? $user[$key] : '';
+            $personalText = str_replace($match, $replace, $personalText);
+            $personalText = preg_replace('/\s+/', ' ', $personalText);
+            $personalText = str_replace(' ,', ',', $personalText);
+        }
+
+        $requests[] = ['text' => $personalText, 'to' => $user['phone']];
+    }
+    else $requests[] = ['text' => $text, 'to' => implode(',', sms77_get_phones($users))];
+
+    foreach ($requests as $request) $responses[] =
+        sms77_post('sms', array_merge(sms77_build_base_params(), $request));
+
+    return $responses;
 }
 

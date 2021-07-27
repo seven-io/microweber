@@ -1,7 +1,6 @@
 <?php only_admin_access();
 
-if (isset($_POST['sms77_bulk_sms'])) $responses[] =
-    sms77_sms(implode(',', sms77_get_phones(sms77_get_users())));
+if (isset($_POST['sms77_bulk_sms'])) $responses = sms77_sms();
 ?>
 
 <?php foreach ((isset($responses) ? $responses : []) as $response): ?>
@@ -126,6 +125,7 @@ if (isset($_POST['sms77_bulk_sms'])) $responses[] =
             </small>
         </label>
         <textarea class='mw-ui-field mw-full-width' id='text' maxlength='1520' name='text'
+                  placeholder='<?php _e('Hi {{first_name}} {{last_name}}, you have not logged on since {{last_login}}, did you forget your username {{username}}?') ?>'
                   required></textarea>
     </div>
 

@@ -1,4 +1,7 @@
-<?php only_admin_access() ?>
+<?php
+only_admin_access();
+$optionGroup = sms77_get_option_group();
+?>
 
 <div class='module-live-edit-settings'>
     <div class='setting-item' id='setting-item'>
@@ -13,7 +16,7 @@
                            id='apiKey'
                            maxlength='90'
                            name='apiKey'
-                           option-group='<?= sms77_get_option_group() ?>'
+                           option-group='<?= $optionGroup ?>'
                            type='text'
                            value='<?= sms77_get_api_key() ?>'
                     />
@@ -30,7 +33,7 @@
                            id='sms_from'
                            maxlength='16'
                            name='sms_from'
-                           option-group='<?= sms77_get_option_group() ?>'
+                           option-group='<?= $optionGroup ?>'
                            type='text'
                            value='<?= sms77_get_sms_from() ?>'
                     />
