@@ -3,29 +3,29 @@
 /**
  * @return array|mixed
  */
-function sms77_get_api_key() {
-    return get_option('apiKey', sms77_get_option_group());
+function seven_get_api_key() {
+    return get_option('apiKey', seven_get_option_group());
 }
 
 /**
  * @return string
  */
-function sms77_get_option_group() {
-    return 'admin/sms77';
+function seven_get_option_group() {
+    return 'admin/seven';
 }
 
 /**
  * @return array|mixed
  */
-function sms77_get_sms_from() {
-    return get_option('sms_from', sms77_get_option_group());
+function seven_get_sms_from() {
+    return get_option('sms_from', seven_get_option_group());
 }
 
 /**
  * @param array $users
  * @return array
  */
-function sms77_get_phones(array $users) {
+function seven_get_phones(array $users) {
     $to = [];
 
     foreach ($users as $user) $to[] = $user['phone'];
@@ -36,7 +36,7 @@ function sms77_get_phones(array $users) {
 /**
  * @return array
  */
-function sms77_get_users() {
+function seven_get_users() {
     $filters = [];
 
     if (isset($_POST['filter_is_active']))
@@ -60,9 +60,9 @@ function sms77_get_users() {
  * @param array $data
  * @return bool|string
  */
-function sms77_post($endpoint, array $data) {
+function seven_post($endpoint, array $data) {
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://gateway.sms77.io/api/' . $endpoint);
+    curl_setopt($ch, CURLOPT_URL, 'https://gateway.seven.io/api/' . $endpoint);
 
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
@@ -70,7 +70,7 @@ function sms77_post($endpoint, array $data) {
         'Accept: application/json',
         'Content-type: application/json',
         'SentWith: Microweber',
-        'X-Api-Key: ' . sms77_get_api_key(),
+        'X-Api-Key: ' . seven_get_api_key(),
     ]);
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -83,7 +83,7 @@ function sms77_post($endpoint, array $data) {
 /**
  * @return array
  */
-function sms77_build_base_params() {
+function seven_build_base_params() {
     $params = [];
 
     foreach (['debug', 'delay', 'flash', 'foreign_id', 'from', 'label', 'no_reload',
@@ -96,9 +96,9 @@ function sms77_build_base_params() {
 /**
  * @return string[]
  */
-function sms77_sms() {
+function seven_sms() {
     $responses = [];
-    $users = sms77_get_users();
+    $users = seven_get_users();
     $text = $_POST['text'];
     $requests = [];
     $matches = [];
@@ -118,10 +118,10 @@ function sms77_sms() {
 
         $requests[] = ['text' => $personalText, 'to' => $user['phone']];
     }
-    else $requests[] = ['text' => $text, 'to' => implode(',', sms77_get_phones($users))];
+    else $requests[] = ['text' => $text, 'to' => implode(',', seven_get_phones($users))];
 
     foreach ($requests as $request) $responses[] =
-        sms77_post('sms', array_merge(sms77_build_base_params(), $request));
+        seven_post('sms', array_merge(seven_build_base_params(), $request));
 
     return $responses;
 }

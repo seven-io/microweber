@@ -1,6 +1,6 @@
 <?php
 only_admin_access();
-$optionGroup = sms77_get_option_group();
+$optionGroup = seven_get_option_group();
 ?>
 
 <div class='module-live-edit-settings'>
@@ -18,7 +18,7 @@ $optionGroup = sms77_get_option_group();
                            name='apiKey'
                            option-group='<?= $optionGroup ?>'
                            type='text'
-                           value='<?= sms77_get_api_key() ?>'
+                           value='<?= seven_get_api_key() ?>'
                     />
                 </div>
 
@@ -35,7 +35,7 @@ $optionGroup = sms77_get_option_group();
                            name='sms_from'
                            option-group='<?= $optionGroup ?>'
                            type='text'
-                           value='<?= sms77_get_sms_from() ?>'
+                           value='<?= seven_get_sms_from() ?>'
                     />
                 </div>
             </div>
@@ -44,13 +44,13 @@ $optionGroup = sms77_get_option_group();
 </div>
 
 <script>
-    sms77_settings = {
+    seven_settings = {
         init: function (item) {
             $(item.querySelectorAll('input[type="text"]')).on('keyup', function () {
                 mw.on.stopWriting(this, function () {
-                    console.log('sms77_settings:OnStopWriting');
+                    console.log('seven_settings:OnStopWriting');
 
-                    sms77_settings.save();
+                    seven_settings.save();
                 });
             });
         },
@@ -64,7 +64,7 @@ $optionGroup = sms77_get_option_group();
             return data;
         },
         save: function () {
-            mw.$('#settingsfield').val(JSON.stringify(sms77_settings.collect()))
+            mw.$('#settingsfield').val(JSON.stringify(seven_settings.collect()))
                 .trigger('change');
         }
     };
@@ -79,7 +79,7 @@ $optionGroup = sms77_get_option_group();
         for (; i < l; i++) {
             if (!!all[i].prepared) continue;
             all[i].prepared = true;
-            sms77_settings.init(all[i]);
+            seven_settings.init(all[i]);
         }
     });
 </script>

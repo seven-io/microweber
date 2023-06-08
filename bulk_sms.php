@@ -1,6 +1,6 @@
 <?php only_admin_access();
 
-if (isset($_POST['sms77_bulk_sms'])) $responses = sms77_sms();
+if (isset($_POST['seven_bulk_sms'])) $responses = seven_sms();
 ?>
 
 <?php foreach ((isset($responses) ? $responses : []) as $response): ?>
@@ -14,7 +14,7 @@ if (isset($_POST['sms77_bulk_sms'])) $responses = sms77_sms();
 <?php endforeach; ?>
 
 <form method='post'>
-    <input type='hidden' value='1' name='sms77_bulk_sms'/>
+    <input type='hidden' value='1' name='seven_bulk_sms'/>
 
     <fieldset>
         <legend><?php _e('Search Filters') ?></legend>
@@ -115,7 +115,7 @@ if (isset($_POST['sms77_bulk_sms'])) $responses = sms77_sms();
             </small>
         </label>
         <input class='mw-ui-field mw-full-width' id='from' maxlength='16' name='from'
-               value='<?= sms77_get_sms_from() ?>'/>
+               value='<?= seven_get_sms_from() ?>'/>
     </div>
 
     <div class='mw-ui-field-holder'>
