@@ -86,7 +86,7 @@ function seven_post($endpoint, array $data) {
 function seven_build_base_params() {
     $params = [];
 
-    foreach (['debug', 'delay', 'flash', 'foreign_id', 'from', 'label', 'no_reload',
+    foreach (['delay', 'flash', 'foreign_id', 'from', 'label', 'no_reload',
                  'performance_tracking'] as $param)
         if (isset($_POST[$param])) $params[$param] = $_POST[$param];
 

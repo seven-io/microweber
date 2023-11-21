@@ -55,14 +55,6 @@ if (isset($_POST['seven_bulk_sms'])) $responses = seven_sms();
     </label>
 
     <label>
-        <input name='debug' type='checkbox' value='1'>
-        <?php _e('Debug') ?>
-        <span data-toggle="tooltip"
-              title="<?php _e('Validates inputs but does not actually send messages') ?>">
-            <i class="mdi mdi-help-circle"></i></span>
-    </label>
-
-    <label>
         <input name='no_reload' type='checkbox' value='1'>
         <?php _e('No Reload Lock') ?>
         <span data-toggle="tooltip"
